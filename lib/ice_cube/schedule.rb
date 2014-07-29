@@ -446,9 +446,13 @@ module IceCube
 
     # Return a boolean indicating whether or not a specific time
     # is excluded from the schedule
+
+    #code changed so that comparison is made based on the day, not on specific time
     def exception_time?(time)
       @all_exception_rules.any? do |rule|
-        rule.on?(time, self)
+        exception_rule_time = Time.new(rule.time.year, rule.time.mon, rule.time.day)
+        formated_time = Time.new(time.year, time.mon, time.day)
+        exception_rule_time == formated_time
       end
     end
 
